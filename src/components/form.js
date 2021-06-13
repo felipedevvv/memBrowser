@@ -36,6 +36,7 @@ const Form = () => {
         }
     }).then(res => {
         setMem("");
+        setMemKey("");
         setFormFilled(false);
 
         console.log(res.status);
