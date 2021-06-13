@@ -13,7 +13,7 @@ const Disclaimer = () => {
 
     return(
         <div className="App">
-            <Card style={{ padding: 30, minWidth: 400, maxWidth: 400, marginBottom: 20 }}>
+            <Card style={{ padding: 30, minWidth: 250, maxWidth: 250, marginBottom: 20, marginTop:  25 }}>
                 <Typography variant="body1">
                     This is not affiliated in any way with<a className={classes.a} href="https://mem.ai">mem.ai</a>. We only use their API and we do not store your API Key whatsoever.
                 </Typography>

@@ -54,7 +54,7 @@ const Form = () => {
     <div className="App">
       {/* <header className="App-header">
       </header> */}
-        <Card style={{ padding: 30, minWidth: 400 }}>
+        <Card style={{ padding: 30, minWidth: 250, maxWidth: 250 }}>
             <Typography variant="h6" className={classes.heading}>
                 Mem from anywhere!
             </Typography>
@@ -71,8 +71,9 @@ const Form = () => {
                     color="primary"
                     value={memKey}
                     className={classes.inputs}
+                    multiline={true}
                     onChange={(e) => {
-                        setMemKey(e.target.value);
+                        setMemKey(e.target.value.trim());
                         setResMsg("");
                     }}
                 />
