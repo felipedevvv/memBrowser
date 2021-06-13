@@ -1,0 +1,12 @@
+{
+  "manifest_version": 3,
+  "name": "Remote Mems",
+  "author": "xxuegoo",
+  "version": "1.0.0",
+  "description": "Allows you to make mems from any machine with chrome.",
+  "icons": {
+    "16": "memLogo16.ico",
+    "48": "memLogo48.ico",
+    "128": "memLogo128.ico"
+  }
+}
