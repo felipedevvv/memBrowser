@@ -3,7 +3,7 @@ import { Card, Typography } from '@material-ui/core';
 const Message = () => {
 
     let message = <Typography variant="body1">
-            <i>Error Handling</i> and <i>Scheduled For</i> features coming soon... &amp; <i>Chrome Extension</i> too.
+            <i>Mobile Friendly</i>, <i>Error Handling</i> and <i>Scheduled For</i> features coming soon... &amp; <i>Chrome Extension</i> too.
         </Typography>;
 
     return(
