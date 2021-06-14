@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Card, OutlinedInput, Typography, Button, FormControl, InputLabel } from '@material-ui/core';
-// Checkbox, FormControlLabel
-// import DateFnsUtils from '@date-io/date-fns';
-// import { DateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
+import { Card, OutlinedInput, Typography, Button, FormControl, InputLabel, Checkbox, FormControlLabel} from '@material-ui/core';
+import DateFnsUtils from '@date-io/date-fns';
+import { DateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import axios from 'axios';
 
 
@@ -21,15 +20,18 @@ const Form = () => {
   const [mem, setMem] = useState("");
   const [memKey, setMemKey] = useState("");
   const [resMsg, setResMsg] = useState("");
-//   const [isScheduled, setIsScheduled] = useState(false);
+  const [snoozeTill, setSnoozeTill] =  useState(null);
+  const [isSnoozed, setIsSnoozed] = useState(false);
   const [formFilled, setFormFilled] = useState(false);
   const classes = useStyles();
 
   const sendMem = async (e) => {
-
-    axios.post('https://api.mem.ai/v0/mems', {
-        content: mem
-    }, {
+    let apiBody = {};
+    isSnoozed ? 
+        apiBody = { content: mem, snoozeTill: snoozeTill} :
+        apiBody = { content: mem};
+    console.log(apiBody);
+    axios.post('https://api.mem.ai/v0/mems', apiBody, {
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `ApiAccessToken ${memKey}`
@@ -37,6 +39,8 @@ const Form = () => {
     }).then(res => {
         setMem("");
         setMemKey("");
+        setSnoozeTill(null);
+        setIsSnoozed(false);
         setFormFilled(false);
 
         console.log(res.status);
@@ -47,13 +51,11 @@ const Form = () => {
   };
 
   useEffect(() => {
-    setFormFilled(memKey !== "" && mem !== "");
-}, [mem, memKey]);
+      setFormFilled(memKey !== "" && mem !== "" && (isSnoozed ? snoozeTill !== null : true));
+}, [mem, memKey, isSnoozed, snoozeTill]);
 
   return (
     <div className="App">
-      {/* <header className="App-header">
-      </header> */}
         <Card style={{ padding: 30, minWidth: 250, maxWidth: 250 }}>
             <Typography variant="h6" className={classes.heading}>
                 Mem from anywhere!
@@ -96,35 +98,36 @@ const Form = () => {
                         setResMsg("");
                     }}
                 />
-                {/* <FormControlLabel
+                <FormControlLabel
                     control={
                         <Checkbox
-                            label="Schedule?"
-                            name="Scheduled"
-                            value={isScheduled}
+                            label="Snooze?"
+                            name="Snoozed"
+                            value={isSnoozed}
                             onChange={() => {
-                                setIsScheduled(!isScheduled)
+                                setIsSnoozed(!isSnoozed);
+                                setSnoozeTill(null);
                                 }
                             }
                         />
                     }
-                    label="Schedule?"
+                    label="Snooze?"
                     labelPlacement="start"
                 />
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                     <DateTimePicker
-                        label="Scheduled For"
+                        label="Snooze Until..."
                         inputVariant="outlined"
                         minDate={Date.now}
                         className={classes.inputs}
-                        disabled={!isScheduled}
+                        disabled={!isSnoozed}
                         disablePast={true}
-                        // value={selectedDate}
+                        value={snoozeTill}
                         onChange={(e) => {
-                            console.log(e);
+                            setSnoozeTill(e.toISOString());
                         }}
                     />
-                </MuiPickersUtilsProvider> */}
+                </MuiPickersUtilsProvider>
                 <Button
                     variant="contained"
                     color="primary"
